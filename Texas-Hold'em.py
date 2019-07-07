@@ -2,49 +2,49 @@ import random
 
 class Card:
 	numbers_to_values = {
-		0: "ACE",
-		1: "TWO",
-		2: "THREE",
-		3: "FOUR",
-		4: "FIVE",
-		5: "SIX",
-		6: "SEVEN",
-		7: "EIGHT",
-		8: "NINE",
-		9: "TEN",
-		10: "JACK",
-		11: "QUEEN",
-		12: "KING"
+		12: "ACE",
+		0: "TWO",
+		1: "THREE",
+		2: "FOUR",
+		3: "FIVE",
+		4: "SIX",
+		5: "SEVEN",
+		6: "EIGHT",
+		7: "NINE",
+		8: "TEN",
+		9: "JACK",
+		10: "QUEEN",
+		11: "KING"
 	}
 	
 	numbers_to_suits = {
-		0: "SPADES",
-		1: "CLUBS",
-		2: "DIAMONDS",
-		3: "HEARTS"
+		3: "SPADES",
+		2: "CLUBS",
+		1: "DIAMONDS",
+		0: "HEARTS"
 	}
 
 	values_to_numbers = {
-		"ACE": 0,
-		"TWO": 1,
-		"THREE": 2,
-		"FOUR": 3,
-		"FIVE": 4,
-		"SIX": 5,
-		"SEVEN": 6,
-		"EIGHT": 7,
-		"NINE": 8,
-		"TEN": 9,
-		"JACK": 10,
-		"QUEEN": 11,
-		"KING": 12
+		"ACE": 12,
+		"TWO": 0,
+		"THREE": 1,
+		"FOUR": 2,
+		"FIVE": 3,
+		"SIX": 4,
+		"SEVEN": 5,
+		"EIGHT": 6,
+		"NINE": 7,
+		"TEN": 8,
+		"JACK": 9,
+		"QUEEN": 10,
+		"KING": 11
 	}
 
 	suits_to_numbers = {
-		"SPADES": 0,
-		"CLUBS": 1,
-		"DIAMONDS": 2,
-		"HEARTS": 3
+		"SPADES": 3,
+		"CLUBS": 2,
+		"DIAMONDS": 1,
+		"HEARTS": 0
 	}
 
 	def __init__(self, value, suit):
@@ -85,8 +85,7 @@ class Card:
 				return self
 			elif self.suit < card.suit:
 				return card
-			else:
-				return None
+		return self
 
 class Deck:
 	def __init__(self, id):
@@ -99,7 +98,7 @@ class Deck:
 		return self.id
 
 	def deal(self):
-		return self.deck.pop(random.randint(0, len(self.deck)))
+		return self.deck.pop(random.randint(0, len(self.deck) - 1))
 
 class Hand:
 	def __init__(self):
@@ -108,12 +107,32 @@ class Hand:
 	def draw(self, deck):
 		self.hand.append(deck.deal())
 
+	def __str__(self):
+		str = ""
+		for x in self.hand:
+			str += x.__str__() + ", "
+		return str[:len(str) - 2]
+
+	def compare_vals(self, hand):
+		card = self.hand[0]
+		for x in self.hand:
+			card = card.compare(x)
+		for x in hand.hand:
+			if card.compare(x) == x:
+				return hand
+		return self
+
 class __main__:
 	deck = Deck(Card("ACE", "SPADES"))
-	hand = Hand()
+	player1 = Hand()
+	player2 = Hand()
 
-	hand.draw(deck)
-	hand.draw(deck)
+	player1.draw(deck)
+	player2.draw(deck)
+	player1.draw(deck)
+	player2.draw(deck)
 
-	print hand.hand[0].compare(hand.hand[1])
-	
+	print player1
+	print player2
+	print
+	print player1.compare_vals(player2)	
