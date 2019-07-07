@@ -131,6 +131,8 @@ class __main__:
 	player2.draw(deck)
 	player1.draw(deck)
 	player2.draw(deck)
+	player1.draw(deck)
+	player2.draw(deck)
 
 	print player1
 	print player2
