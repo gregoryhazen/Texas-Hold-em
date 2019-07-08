@@ -138,4 +138,5 @@ class __main__:
 	print player2
 	print
 	print
+	print
 	print player1.compare_vals(player2)
